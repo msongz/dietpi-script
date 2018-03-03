@@ -19,8 +19,6 @@ if ! dpkg -l zsh &> /dev/null
 then
 	sudo apt-get install zsh -y
 fi
-# chsh -s $(grep /zsh$ /etc/shells | tail -1)
-# chsh -s $(which zsh)
 
 echo "-------------oh-my-zsh"
 # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -44,7 +42,6 @@ source ~/.iterm2_shell_integration.zsh" >> $HOME/.zshrc
 
 
 echo "-------------zsh-autosuggestions"
-# git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]; then
 	git clone http://zerow:3000/songz/zsh-autosuggestions $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 	# git clone https://github.com/zsh-users/zsh-autosuggestions.git $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
@@ -56,27 +53,9 @@ if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]; then
 	git clone http://zerow:3000/songz/syntax.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 fi
 
-
-# apt
-echo "-------------apt"
-# sudo apt-get update
-# sudo apt-get upgrade -y
-# sudo apt-get install htop -y
-# sudo apt-get install git -y
-
-# rc.local
-#echo "-------------rc.local"
-#echo -e "#!/bin/sh -e\naria2c --conf-path=/home/pi/.aria2/aria2.conf &\nsu - root -c '/home/pi/rslsync --webui.listen 0.0.0.0:8888' &\nsu - pi -c 'python -m SimpleHTTPServer 8080' &\nexit 0" | sudo tee /etc/rc.local
-
 # aria2
 echo "-------------aria2"
-# git clone https://github.com/ziahamza/webui-aria2.git
-# sudo apt-get install aria2 -y
-# mkdir ~/.aria2
-# touch ~/.aria2/aria2.session
-# echo -e "dir=/home/pi/Downloads\ncontinue=true\nenable-rpc=true\nrpc-allow-origin-all=true\nrpc-listen-all=true\nrpc-listen-port=6800\nmax-connection-per-server=10\nsplit=10\nmax-overall-download-limit=0\nmax-download-limit=0\nmax-overall-upload-limit=0\nmax-upload-limit=0\ninput-file=/home/pi/.aria2/aria2.session\nsave-session=/home/pi/.aria2/aria2.session\nsave-session-interval=60\nseed-ratio=1\nbt-seed-unverified=true" > ~/.aria2/aria2.conf
 mkdir -p $HOME/.config/aria2/ && touch $_/aria2.session $_/aria2.conf
-# mkdir $HOME/.config/aria2/aria2 && $_/aria2.conf
 
 echo -e "#dir=$HOME/Downloads
 continue=true
@@ -95,9 +74,6 @@ bt-seed-unverified=true
 check-certificate=false
 load-cookies=true" > $HOME/.config/aria2/aria2.conf
 
-# ftp
-# echo "-------------ftp"
-# sudo apt-get install pure-ftpd -y
 
 # gitea
 echo "-------------gitea"
@@ -151,26 +127,6 @@ WantedBy = multi-user.target" | sudo tee /etc/systemd/system/resilio.service
 
 sudo systemctl enable resilio.service
 fi
-# samba
-# echo "-------------samba"
-# sudo apt-get install samba samba-common-bin -y
-# echo -e "[downloads]\ncomment = downloads\npath = "/home/pi/Downloads"\nwriteable = yes\nguest ok = yes\ncreate mask = 0644\ndirectory mask = 0755\nforce user = pi" | sudo tee --append /etc/samba/smb.conf
-
-# chk-rsl.sh
-# echo "-------------chk-rsl"
-# echo -e "#!/bin/bash\npidof rslsync > /dev/null\nif [ \$? -ne 0 ] ; then\n    /home/pi/rslsync --webui.listen 0.0.0.0:8888 &\nfi" > /home/pi/chk-rsl.sh
-# chmod 777 /home/pi/chk-rsl.sh
-
-
-# sudo crontab
-# echo "-------------sudo crontab"
-# (crontab -l ; echo "*/5 * * * * sh /home/pi/chk-rsl.sh") | sudo crontab -
-# node red
-# echo "-------------node-red"
-# bash <(curl -sL https://raw.githubusercontent.com/node-red/raspbian-deb-package/master/resources/update-nodejs-and-nodered)
-# echo ";;;;;;;;;dashboard"
-# cd .node-red && npm i node-red-dashboard
-# sudo systemctl enable nodered.service
 
 
 echo "-------------source-list"
