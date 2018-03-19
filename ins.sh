@@ -35,21 +35,22 @@ echo "-------------oh-my-zsh"
 
 sh -c "$(curl -fsSL $ZSHURL)"
 
-echo "-------------sed"
+echo "-------------zshrc"
 sed -i "s/# export PATH=\$HOME\/bin/export PATH=\$HOME\/bin\:\/sbin\:\/usr\/sbin\//g" $HOME/.zshrc
+sed -i "s/# export LANG/export LANG/g" $HOME/.zshrc
 sed -i "s/git$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting/g" $HOME/.zshrc
 sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"agnoster\"/g" $HOME/.zshrc
 sed -i "s/^alias/#alias/g" $HOME/.zshrc
 sed -i "s/^\/DietPi/#\/DietPi/g" $HOME/.zshrc
 sed -i "s/^\. \/DietPi/#\. \/DietPi/g" $HOME/.zshrc
 sed -i "s/^source ~\/\.iterm2/#source ~\/\.iterm2/g" $HOME/.zshrc
-sed -i "s/# export LANG/export LANG/g" $HOME/.zshrc
-
+sed -i "s/^echo \" storage/#echo \" storage/g" $HOME/.zshrc
 
 echo -e "/DietPi/dietpi/login
 . /DietPi/dietpi/func/dietpi-globals
 alias f/=\"find / -type f -iname\" f.=\"find . -type f -iname\" p=\"pidof\" k=\"kill -9\" rr=\"sudo reboot\" is=\"sudo apt-get install\" up=\"sudo apt-get update\" ud=\"sudo apt-get upgrade\" sd=\"sudo poweroff\"
-source ~/.iterm2_shell_integration.zsh" >> $HOME/.zshrc
+source ~/.iterm2_shell_integration.zsh
+echo " storage left : $(df -h | grep '/dev/root'| awk '{ print $4 }')"" >> $HOME/.zshrc
 
 
 
