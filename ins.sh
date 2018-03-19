@@ -44,13 +44,13 @@ sed -i "s/^alias/#alias/g" $HOME/.zshrc
 sed -i "s/^\/DietPi/#\/DietPi/g" $HOME/.zshrc
 sed -i "s/^\. \/DietPi/#\. \/DietPi/g" $HOME/.zshrc
 sed -i "s/^source ~\/\.iterm2/#source ~\/\.iterm2/g" $HOME/.zshrc
-sed -i "s/^echo \" storage/#echo \" storage/g" $HOME/.zshrc
+sed -i "s/^echo/#echo/g" $HOME/.zshrc
 
 echo -e "/DietPi/dietpi/login
 . /DietPi/dietpi/func/dietpi-globals
 alias css=\"sudo systemctl stop\" csr=\"sudo systemctl restart\" cst=\"sudo systemctl status\" f/=\"find / -type f -iname\" f.=\"find . -type f -iname\" p=\"pidof\" k=\"kill -9\" rr=\"sudo reboot\" is=\"sudo apt-get install\" up=\"sudo apt-get update\" ud=\"sudo apt-get upgrade\" sd=\"sudo poweroff\"
 source ~/.iterm2_shell_integration.zsh
-echo " storage left : $(df -h | grep '/dev/root'| awk '{ print $4 }')"" >> $HOME/.zshrc
+echo -e \" \\\033[1mstorage left : \\\033[7m\$(df -h|grep '/dev/root'|awk '{ print \$4 }')\"" >> $HOME/.zshrc
 
 
 
