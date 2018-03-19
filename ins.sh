@@ -32,10 +32,10 @@ fi
 
 echo "-------------oh-my-zsh"
 
-
 sh -c "$(curl -fsSL $ZSHURL)"
 
 echo "-------------zshrc"
+
 sed -i "s/# export PATH=\$HOME\/bin/export PATH=\$HOME\/bin\:\/sbin\:\/usr\/sbin\//g" $HOME/.zshrc
 sed -i "s/# export LANG/export LANG/g" $HOME/.zshrc
 sed -i "s/git$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting/g" $HOME/.zshrc
@@ -48,19 +48,21 @@ sed -i "s/^echo \" storage/#echo \" storage/g" $HOME/.zshrc
 
 echo -e "/DietPi/dietpi/login
 . /DietPi/dietpi/func/dietpi-globals
-alias f/=\"find / -type f -iname\" f.=\"find . -type f -iname\" p=\"pidof\" k=\"kill -9\" rr=\"sudo reboot\" is=\"sudo apt-get install\" up=\"sudo apt-get update\" ud=\"sudo apt-get upgrade\" sd=\"sudo poweroff\"
+alias css=\"sudo systemctl stop\" csr=\"sudo systemctl restart\" cst=\"sudo systemctl status\" f/=\"find / -type f -iname\" f.=\"find . -type f -iname\" p=\"pidof\" k=\"kill -9\" rr=\"sudo reboot\" is=\"sudo apt-get install\" up=\"sudo apt-get update\" ud=\"sudo apt-get upgrade\" sd=\"sudo poweroff\"
 source ~/.iterm2_shell_integration.zsh
 echo " storage left : $(df -h | grep '/dev/root'| awk '{ print $4 }')"" >> $HOME/.zshrc
 
 
 
 echo "-------------zsh-autosuggestions"
+
 if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]; then
 	# git clone http://zerow:3000/songz/zsh-autosuggestions $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 	git clone $ZSHSUGG $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 fi
 
 echo "-------------zsh-syntax-highlighting"
+
 if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]; then
 	git clone $ZSHSYNX $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	# git clone http://zerow:3000/songz/syntax.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
@@ -73,8 +75,8 @@ fi
 
 
 #################### aria2
-echo "-------------aria2"
 
+echo "-------------aria2"
 
 touch $ARIA/aria2.session
 
@@ -140,10 +142,9 @@ auto-file-renaming=false
 file-allocation=none" > $ARIA/aria2.conf
 
 #################### gitea
+
 echo "-------------gitea"
 
-# gitea
-echo "-------------gitea"
 if [ ! -d $HOME/gitea ]; then
 mkdir -p $HOME/gitea
 wget -O $HOME/gitea/gitea $GITEA
@@ -164,8 +165,8 @@ WantedBy=multi-user.target" | sudo tee /etc/systemd/system/gitea.service
 sudo systemctl enable gitea.service
 fi
 ################### resilio
-echo "-------------resilio"
 
+echo "-------------resilio"
 
 if [ ! -d $HOME/resilio ]; then
 mkdir -p $HOME/resilio
@@ -192,6 +193,7 @@ sudo systemctl enable resilio.service
 fi
 
 echo "-------------source-list"
+
 echo -e "#deb https://archive.raspberrypi.org/debian/ stretch main ui
 deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ stretch main ui" > /etc/apt/sources.list.d/raspi.list
 
@@ -255,6 +257,7 @@ fi
 if ! dpkg -l lsb-release &> /dev/null
 then
 echo "-------------RetroPie"
+
 sudo apt-get install lsb-release -y
 fi
 
@@ -267,6 +270,7 @@ sudo $HOME/RetroPie-Setup/retropie_setup.sh
 ################### finish
 
 echo "-------------source"
+
 # source $HOME/.zshrc
 env zsh
 
