@@ -254,6 +254,7 @@ fi
 
 ################### RetroPie
 
+
 if ! dpkg -l lsb-release &> /dev/null
 then
 echo "-------------RetroPie"
@@ -282,5 +283,13 @@ env zsh
 # omxplayer looping
 
 # while : ; do for f in * ; do omxplayer --blank --win 0,40,1280,680 --aspect-mode stretch "$f"; done; done
+
+# lighttpd wordpress fix permalink to /etc/lighttpd/lighttpd.conf
+
+# server.modules += ("mod_rewrite")
+# url.rewrite-once = (
+# "^/wordpress/(wp-.+)$" => "$0",
+# "^/wordpress/(.*)$" => "/wordpress/index.php/$1"
+# )
 
 #
