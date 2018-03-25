@@ -286,9 +286,10 @@ env zsh
 # lighttpd wordpress fix permalink to /etc/lighttpd/lighttpd.conf
 
 # server.modules += ("mod_rewrite")
-# url.rewrite-once = (
-# "^/wordpress/(wp-.+)$" => "$0",
-# "^/wordpress/(.*)$" => "/wordpress/index.php/$1"
+# url.rewrite = (
+#         "^/wordpress/(wp-admin|wp-includes|wp-content|gallery2)/(.*)" => "$0",
+#         "^/wordpress/(.*)\.(.+)$" => "$0",
+#         "^/wordpress/(.+)/?$" => "/wordpress/index.php/$1"
 # )
 
 #
