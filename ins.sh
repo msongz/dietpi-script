@@ -87,7 +87,7 @@ touch $ARIA/aria2.session
 # mkdir $HOME/.config/aria2/aria2 && $_/aria2.conf
 
 echo -e "# host is where aria2c is running on
-host=localhost
+# host=localhost
 dir=/mnt/dietpi_userdata/downloads
 
 # cleanup_policy
@@ -135,7 +135,7 @@ max-download-limit=0
 seed-ratio=1
 seed-time=0
 
-metalink-servers=13
+# metalink-servers=13
 allow-overwrite=false
 always-resume=true
 auto-file-renaming=false
