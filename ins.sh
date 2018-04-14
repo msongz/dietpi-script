@@ -133,7 +133,7 @@ max-overall-download-limit=0
 max-upload-limit=0
 max-download-limit=0
 seed-ratio=1
-seed-time=0
+seed-time=5000
 
 # metalink-servers=13
 allow-overwrite=false
