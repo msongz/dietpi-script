@@ -261,6 +261,8 @@ if [ ! -d $HOME/RSSHub ]; then
 git clone $RSSHUB
 fi
 
+npm i -g npm
+
 cd $HOME/RSSHub && npm install
 cd $HOME
 
