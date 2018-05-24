@@ -7,6 +7,7 @@ ARIA=/var/lib/dietpi/dietpi-software/installed
 ZSHURL=https://raw.githubusercontent.com/msongz/oh-my-zsh/master/tools/install.sh
 ZSHSUGG=https://github.com/zsh-users/zsh-autosuggestions.git
 ZSHSYNX=https://github.com/zsh-users/zsh-syntax-highlighting.git
+RSSHUB=https://github.com/DIYgod/RSSHub.git
 RSLS=resilio-sync_arm.tar.gz
 RSLK=linux-arm
 NGROK=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
@@ -251,6 +252,32 @@ WantedBy=multi-user.target" | sudo tee /etc/systemd/system/ngrok.service
 # sudo systemctl enable ngrok.service
 
 fi
+
+################### rsshub
+
+echo "-------------rsshub"
+
+if [ ! -d $HOME/RSSHub ]; then
+
+git clone $RSSHUB
+fi
+
+cd $HOME/RSSHub && npm install
+cd $HOME
+
+echo -e "[Unit]
+Description=rsshub
+
+[Service]
+User=root
+WorkingDirectory=$HOME/RSSHub
+ExecStart=/usr/local/bin/node $HOME/RSSHub/index.js
+Restart=always
+
+[Install]
+WantedBy=multi-user.target" | sudo tee /etc/systemd/system/rss.service
+
+sudo systemctl enable rss.service
 
 ################### RetroPie
 
