@@ -2,7 +2,7 @@
 # My first script
 # zerow
 
-GITEA=https://dl.gitea.io/gitea/1.4.1/gitea-1.4.1-linux-arm-6
+GITEA=https://dl.gitea.io/gitea/1.5/gitea-1.5-linux-arm-6
 ARIA=/var/lib/dietpi/dietpi-software/installed
 ZSHURL=https://raw.githubusercontent.com/msongz/oh-my-zsh/master/tools/install.sh
 ZSHSUGG=https://github.com/zsh-users/zsh-autosuggestions.git
@@ -306,6 +306,8 @@ env zsh
 
 
 # useful command
+
+# cat /Users/meng/dietpi-script/songz-dietpi.txt >/Volumes/boot/dietpi.txt
 
 # cat Documents/ins.sh | ssh root@pi2 "cat > ins.sh"
 
