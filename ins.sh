@@ -2,7 +2,7 @@
 # My first script
 # pi2
 
-GITEA=https://dl.gitea.io/gitea/1.4.1/gitea-1.4.1-linux-arm-7
+GITEA=https://dl.gitea.io/gitea/1.5/gitea-1.5-linux-arm-7
 ARIA=/var/lib/dietpi/dietpi-software/installed
 ZSHURL=https://raw.githubusercontent.com/msongz/oh-my-zsh/master/tools/install.sh
 ZSHSUGG=https://github.com/zsh-users/zsh-autosuggestions.git
@@ -249,6 +249,8 @@ Restart=always
 [Install]
 WantedBy=multi-user.target" | sudo tee /etc/systemd/system/ngrok.service
 
+# sudo systemctl enable ngrok.service
+
 sudo systemctl enable ngrok.service
 fi
 
@@ -305,6 +307,8 @@ env zsh
 
 
 # useful command
+
+# cat /Users/meng/dietpi-script/songz-dietpi.txt >/Volumes/boot/dietpi.txt
 
 # cat Documents/ins.sh | ssh root@pi2 "cat > ins.sh"
 
