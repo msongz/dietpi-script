@@ -78,6 +78,7 @@ AUTO_SETUP_GLOBAL_PASSWORD=123456
 #	No limit on number entries, add as many as you need and uncomment the line.
 #	DietPi will automatically install all pre-reqs (eg: ALSA/XSERVER for desktops etc)
 #	- Examples:
+AUTO_SETUP_INSTALL_SOFTWARE_ID=59	#rpicam
 AUTO_SETUP_INSTALL_SOFTWARE_ID=132	#aria2
 AUTO_SETUP_INSTALL_SOFTWARE_ID=122	#nodred
 # AUTO_SETUP_INSTALL_SOFTWARE_ID=62	#will install Bittorrent transmission
