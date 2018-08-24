@@ -267,7 +267,7 @@ fi
 echo "-------------frp"
 
 if [ ! -d $HOME/frp ]; then
-  wget -qO- $FRPLINK | tar zxv -C $HOME/frp --strip-components=1
+  mkdir -p $HOME/frp && wget -qO- $FRPLINK | tar zxv -C $HOME/frp --strip-components=1
 fi
 
 echo -e "[Unit]
