@@ -267,7 +267,7 @@ echo "-------------frp"
 
 if [ ! -d $HOME/frp ]; then
   mkdir -p $HOME/frp && wget -qO- $FRPLINK | tar zxv -C $HOME/frp --strip-components=1
-fi
+
 
 echo -e "[Unit]
 Description=frp
@@ -284,7 +284,7 @@ ExecStart=$HOME/frp/frpc -c $HOME/frp/frpc.ini
 WantedBy=multi-user.target" | sudo tee /etc/systemd/system/frp.service
 
 sudo systemctl enable frp.service
-
+fi
 
 ################### rsshub
 
@@ -293,7 +293,7 @@ echo "-------------rsshub"
 if [ ! -d $HOME/RSSHub ]; then
 
 git clone $RSSHUB
-fi
+
 
 npm config set registry https://registry.npm.taobao.org
 
@@ -315,7 +315,7 @@ Restart=always
 WantedBy=multi-user.target" | sudo tee /etc/systemd/system/rss.service
 
 sudo systemctl enable rss.service
-
+fi
 ################### RetroPie
 
 
@@ -328,10 +328,10 @@ fi
 
 if [ ! -d $HOME/RetroPie-Setup ]; then
 git clone --depth=1 $RETRO
-fi
+
 
 sudo $HOME/RetroPie-Setup/retropie_setup.sh
-
+fi
 ################### finish
 
 echo "-------------source"
