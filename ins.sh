@@ -2,7 +2,7 @@
 # My first script
 # zerow
 
-GITEA=https://dl.gitea.io/gitea/1.5/gitea-1.5-linux-arm-6
+GITEA=https://dl.gitea.io/gitea/1.5.0/gitea-1.5.0-linux-arm-6
 ARIA=/var/lib/dietpi/dietpi-software/installed
 ZSHURL=https://raw.githubusercontent.com/msongz/oh-my-zsh/master/tools/install.sh
 ZSHSUGG=https://github.com/zsh-users/zsh-autosuggestions.git
