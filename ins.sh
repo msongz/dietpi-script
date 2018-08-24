@@ -292,6 +292,7 @@ After=network.target
 [Service]
 Type=simple
 Restart=always
+RestartSec=3
 User=root
 WorkingDirectory=$HOME/frp
 ExecStart=$HOME/frp/frpc -c $HOME/frp/frpc.ini
