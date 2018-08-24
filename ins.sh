@@ -42,7 +42,7 @@ echo "-------------zshrc"
 sed -i "s/# export PATH=\$HOME\/bin/export PATH=\$HOME\/bin\:\/sbin\:\/usr\/sbin\//g" $HOME/.zshrc
 sed -i "s/# export LANG/export LANG/g" $HOME/.zshrc
 sed -i "s/git$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting/g" $HOME/.zshrc
-sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"powerlevel9k/powerlevel9k\"/g" $HOME/.zshrc
+sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"powerlevel9k\/powerlevel9k\"/g" $HOME/.zshrc
 sed -i "s/^alias/#alias/g" $HOME/.zshrc
 sed -i "s/^\/DietPi/#\/DietPi/g" $HOME/.zshrc
 sed -i "s/^\. \/DietPi/#\. \/DietPi/g" $HOME/.zshrc
