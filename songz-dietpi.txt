@@ -55,9 +55,12 @@ AUTO_SETUP_NET_ETH_FORCE_SPEED=0
 
 #	Size of swapfile to generate (MB)
 #		0=Disabled | 1=auto (2GB-RAM = size) | 2+=manual
-AUTO_SETUP_SWAPFILE_SIZE=0
+AUTO_SETUP_SWAPFILE_SIZE=1
 #		Optional swapfile location
 AUTO_SETUP_SWAPFILE_LOCATION=/var/swap
+
+# Unmask (enable) systemd-logind service, which is masked by default on DietPi 
+AUTO_UNMASK_LOGIND=0
 
 ##### Software Automation Options #####
 
@@ -67,6 +70,7 @@ AUTO_SETUP_SWAPFILE_LOCATION=/var/swap
 AUTO_SETUP_AUTOMATED=1
 
 #	Global Password to be applied for the system
+#		Requires AUTO_SETUP_AUTOMATED=1
 #		Affects user "root" and "dietpi" login passwords, and, all software installed by dietpi-software, that requires a password
 #		eg: MySQL, Transmission, Deluge etc.
 #		WARN: Passwords with the any of the following characters are not supported: \"$
@@ -102,8 +106,8 @@ AUTO_SETUP_FILE_SERVER_INDEX=-2
 #		-2=ramlog 1h save clear
 #		-3=logrotate + rsyslog
 AUTO_SETUP_LOGGING_INDEX=-1
-#	RAMlog max tmpfs size (MB). 20MB should be fine for single use. 200MB+ for heavy webserver and access log use etc.
-AUTO_SETUP_RAMLOG_MAXSIZE=20
+#	RAMlog max tmpfs size (MB). 50MB should be fine for single use. 200MB+ for heavy webserver and access log use etc.
+AUTO_SETUP_RAMLOG_MAXSIZE=50
 
 #	Webserver Preference Selection:
 #	NB: This will get ignored, if you have manually selected any WEBSERVER_Stack.
@@ -155,23 +159,6 @@ CONFIG_CPU_ONDEMAND_SAMPLE_RATE=25000
 #sampling rate * down factor / 1000 = Milliseconds (40 = 1000ms when sampling rate is 25000)
 CONFIG_CPU_ONDEMAND_SAMPLE_DOWNFACTOR=80
 
-#Samba Client Details (Used by DietPi-Config | Networking NAS | Samba Client)
-#	NB: Do not modify, you must use dietpi-config to configure/set options
-CONFIG_SMBCLIENT_COMPUTERNAME=computername
-CONFIG_SMBCLIENT_SHARENAME=sharename
-CONFIG_SMBCLIENT_USERNAME=username
-CONFIG_SMBCLIENT_PASSWORD=password
-
-#FTP Client Filesystem Mount (CurlFtpFs) (Used by DietPi-Config | Networking NAS | FTP Client)
-#	NB: Do not modify, you must use dietpi-config to configure/set options
-CONFIG_CURLFTPFS_ADDRESS=192.168.0.100
-CONFIG_CURLFTPFS_USERNAME=username
-CONFIG_CURLFTPFS_PASSWORD=password
-
-#NFS Client Filesystem Mount (Used by DietPi-Config | Networking NAS | NFS Client)
-#	NB: Do not modify, you must use dietpi-config to configure/set options
-CONFIG_NFSCLIENT_ADDRESS=
-
 #Proxy settings | System-wide proxy settings. Use dietpi-config > networking options to apply.
 #	NB: Do not modify, you must use dietpi-config to configure/set options
 CONFIG_PROXY_ENABLED=0
@@ -181,7 +168,7 @@ CONFIG_PROXY_USERNAME=
 CONFIG_PROXY_PASSWORD=
 
 #Delay boot until network is established: 0=disabled | 1=10 second wait max (default) | 2=infinite wait
-CONFIG_BOOT_WAIT_FOR_NETWORK=2
+CONFIG_BOOT_WAIT_FOR_NETWORK=1
 
 #DietPi check for updates (allows dietpi to check for updates on a daily basis and boot using a <1kb file download.)
 CONFIG_CHECK_DIETPI_UPDATES=1
