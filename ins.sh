@@ -7,6 +7,7 @@ ARIA=/var/lib/dietpi/dietpi-software/installed
 ZSHURL=https://raw.githubusercontent.com/msongz/oh-my-zsh/master/tools/install.sh
 ZSHSUGG=https://github.com/zsh-users/zsh-autosuggestions.git
 ZSHSYNX=https://github.com/zsh-users/zsh-syntax-highlighting.git
+POWERLEVEL9K=https://github.com/bhilburn/powerlevel9k.git
 RSSHUB=https://github.com/DIYgod/RSSHub.git
 RSLS=resilio-sync_arm.tar.gz
 RSLK=linux-arm
@@ -40,7 +41,7 @@ echo "-------------zshrc"
 sed -i "s/# export PATH=\$HOME\/bin/export PATH=\$HOME\/bin\:\/sbin\:\/usr\/sbin\//g" $HOME/.zshrc
 sed -i "s/# export LANG/export LANG/g" $HOME/.zshrc
 sed -i "s/git$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting/g" $HOME/.zshrc
-sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"agnoster\"/g" $HOME/.zshrc
+sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"powerlevel9k/powerlevel9k\"/g" $HOME/.zshrc
 sed -i "s/^alias/#alias/g" $HOME/.zshrc
 sed -i "s/^\/DietPi/#\/DietPi/g" $HOME/.zshrc
 sed -i "s/^\. \/DietPi/#\. \/DietPi/g" $HOME/.zshrc
@@ -68,6 +69,13 @@ if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]; then
 	git clone $ZSHSYNX $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	# git clone http://zerow:3000/songz/syntax.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 fi
+
+echo "-------------powerlevel9k"
+
+if [ ! -d $HOME/.oh-my-zsh/custom/themes/powerlevel9k ]; then
+  git clone $POWERLEVEL9K $HOME/.oh-my-zsh/custom/themes/powerlevel9k
+fi
+
 
 
 # rc.local
