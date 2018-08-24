@@ -13,6 +13,7 @@ RSLS=resilio-sync_armhf.tar.gz
 RSLK=linux-armhf
 NGROK=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
 RETRO=https://github.com/RetroPie/RetroPie-Setup.git
+FRPLINK=https://github.com/fatedier/frp/releases/download/v0.21.0/frp_0.21.0_linux_arm.tar.gz
 
 ################### zsh
 echo "-------------zsh screen git"
@@ -250,9 +251,8 @@ After=network.target
 Type=simple
 Restart=always
 User=root
-WorkingDirectory=/root
-ExecStart=/root/ngrok start -all
-Restart=always
+WorkingDirectory=$HOME
+ExecStart=$HOME/ngrok start -all
 
 [Install]
 WantedBy=multi-user.target" | sudo tee /etc/systemd/system/ngrok.service
@@ -261,6 +261,31 @@ WantedBy=multi-user.target" | sudo tee /etc/systemd/system/ngrok.service
 
 sudo systemctl enable ngrok.service
 fi
+
+################### frp
+
+echo "-------------frp"
+
+if [ ! -d $HOME/frp ]; then
+  wget -qO- $FRPLINK | tar zxv -C $HOME/frp --strip-components=1
+fi
+
+echo -e "[Unit]
+Description=frp
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+User=root
+WorkingDirectory=$HOME/frp
+ExecStart=$HOME/frp/frpc -c $HOME/frp/frpc.ini
+
+[Install]
+WantedBy=multi-user.target" | sudo tee /etc/systemd/system/frp.service
+
+sudo systemctl enable frp.service
+
 
 ################### rsshub
 
