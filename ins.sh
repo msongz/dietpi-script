@@ -270,6 +270,21 @@ if [ ! -d $HOME/frp ]; then
   mkdir -p $HOME/frp && wget -qO- $FRPLINK | tar zxv -C $HOME/frp --strip-components=1
 
 
+echo -e "[common]
+server_addr = msongz.design
+server_port = 7000
+
+[ssh]
+type = tcp
+local_ip = 127.0.0.1
+local_port = 22
+remote_port = 6000
+
+[web]
+type = http
+local_port = 80
+custom_domains = msongz.design" | sudo tee $HOME/frp/frpc.ini
+
 echo -e "[Unit]
 Description=frp
 After=network.target
