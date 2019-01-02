@@ -2,8 +2,9 @@
 # My first script
 # pi2
 
-GITEA=https://dl.gitea.io/gitea/1.5.0/gitea-1.5.0-linux-arm-7
+GITEA=https://dl.gitea.io/gitea/1.6.2/gitea-1.6.2-linux-arm-7
 ARIA=/var/lib/dietpi/dietpi-software/installed
+EPAD=https://github.com/ether/etherpad-lite.git
 ZSHURL=https://raw.githubusercontent.com/msongz/oh-my-zsh/master/tools/install.sh
 ZSHSUGG=https://github.com/zsh-users/zsh-autosuggestions.git
 ZSHSYNX=https://github.com/zsh-users/zsh-syntax-highlighting.git
@@ -11,7 +12,7 @@ POWERLEVEL9K=https://github.com/bhilburn/powerlevel9k.git
 RSSHUB=https://github.com/DIYgod/RSSHub.git
 RSLS=resilio-sync_armhf.tar.gz
 RSLK=linux-armhf
-NGROK=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
+# NGROK=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
 RETRO=https://github.com/RetroPie/RetroPie-Setup.git
 FRPLINK=https://github.com/fatedier/frp/releases/download/v0.21.0/frp_0.21.0_linux_arm.tar.gz
 
@@ -210,57 +211,57 @@ deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ stretch main ui" 
 ################### ngrok
 
 
-if [ ! -f $HOME/ngrok ]
-then
-echo "-------------ngrok"
+# if [ ! -f $HOME/ngrok ]
+# then
+# echo "-------------ngrok"
 
-wget $NGROK
+# wget $NGROK
 
-unzip $HOME/ngrok-stable-linux-arm.zip
+# unzip $HOME/ngrok-stable-linux-arm.zip
 
-mkdir -p $HOME/.ngrok2 && touch $_/ngrok.yml
+# mkdir -p $HOME/.ngrok2 && touch $_/ngrok.yml
 
-echo -e "authtoken: 2jWq5RHKhqQmZ9ieHQh8n_FPQFRU67yxYey4NNBWja
-web_addr: 0.0.0.0:4040
-tunnels:
-  httpbin:
-    proto: http
-    addr: 6800
-    bind_tls: true
-  demo:
-    proto: http
-    addr: 3000
-    bind_tls: true
-    inspect: false
-    auth: demo:secret
-  songz:
-    proto: http
-    bind_tls: true
-    addr: 8888
-  httpbinaa:
-    proto: http
-    addr: 80
-    bind_tls: true" > $HOME/.ngrok2/ngrok.yml
+# echo -e "authtoken: 2jWq5RHKhqQmZ9ieHQh8n_FPQFRU67yxYey4NNBWja
+# web_addr: 0.0.0.0:4040
+# tunnels:
+#   httpbin:
+#     proto: http
+#     addr: 6800
+#     bind_tls: true
+#   demo:
+#     proto: http
+#     addr: 3000
+#     bind_tls: true
+#     inspect: false
+#     auth: demo:secret
+#   songz:
+#     proto: http
+#     bind_tls: true
+#     addr: 8888
+#   httpbinaa:
+#     proto: http
+#     addr: 80
+#     bind_tls: true" > $HOME/.ngrok2/ngrok.yml
 
-echo -e "[Unit]
-Description=ngrok
-After=network.target
+# echo -e "[Unit]
+# Description=ngrok
+# After=network.target
 
-[Service]
+# [Service]
 
-Type=simple
-Restart=always
-User=root
-WorkingDirectory=$HOME
-ExecStart=$HOME/ngrok start -all
+# Type=simple
+# Restart=always
+# User=root
+# WorkingDirectory=$HOME
+# ExecStart=$HOME/ngrok start -all
 
-[Install]
-WantedBy=multi-user.target" | sudo tee /etc/systemd/system/ngrok.service
+# [Install]
+# WantedBy=multi-user.target" | sudo tee /etc/systemd/system/ngrok.service
+
+# # sudo systemctl enable ngrok.service
 
 # sudo systemctl enable ngrok.service
-
-sudo systemctl enable ngrok.service
-fi
+# fi
 
 ################### frp
 
@@ -333,6 +334,51 @@ WantedBy=multi-user.target" | sudo tee /etc/systemd/system/rss.service
 
 sudo systemctl enable rss.service
 fi
+
+
+################### etherpad
+
+echo "-------------etherpad"
+
+if [ ! -d $HOME/etherpad-lite ]; then
+
+git clone $EPAD
+
+$HOME/etherpad-lite/bin/installDeps.sh --root
+
+echo -e "[Unit]
+Description=etherpad-lite
+
+[Service]
+User=root
+Environment=NODE_ENV=production
+ExecStart=$HOME/etherpad-lite/bin/run.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target" | sudo tee /etc/systemd/system/etherpad.service
+
+sudo systemctl enable etherpad.service
+
+sed -i "s/^bin\/installDeps/#bin\/installDeps/g" $HOME/etherpad-lite/bin/run.sh
+sed -i "s/etherpaduser/root/g" $HOME/etherpad-lite/settings.json
+sed -i "s/changeme1//" $HOME/etherpad-lite/settings.json
+sed -i "80s/.*/  \/\*/g" $HOME/etherpad-lite/settings.json
+sed -i "85s/.*/  \*\//g" $HOME/etherpad-lite/settings.json
+sed -i "92s/.*//g" $HOME/etherpad-lite/settings.json
+sed -i "102s/.*//g" $HOME/etherpad-lite/settings.json
+sed -i "310s/.*//g" $HOME/etherpad-lite/settings.json
+sed -i "323s/.*//g" $HOME/etherpad-lite/settings.json
+sed -i "s/PASSWORD//g" $HOME/etherpad-lite/settings.json
+
+
+mysql -u root -e "create database etherpad_lite_db"
+
+fi
+
+
+
+
 ################### RetroPie
 
 
@@ -355,6 +401,8 @@ echo "-------------source"
 
 # source $HOME/.zshrc
 env zsh
+
+
 
 
 # useful command
