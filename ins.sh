@@ -425,3 +425,32 @@ env zsh
 # )
 
 #
+#
+#[Unit]
+# Description=frp
+# After=network.target
+
+# [Service]
+# Type=simple
+# Restart=always
+# User=root
+# WorkingDirectory=/root/frp
+# ExecStart=/root/frp/frps -c /root/frp/frps.ini
+
+# [Install]
+# WantedBy=multi-user.target
+# 
+# 
+# 
+# [Unit]
+# Description=rsshub
+
+# [Service]
+# User=root
+# WorkingDirectory=/root/RSSHub
+# ExecStart=/usr/bin/node /root/RSSHub/index.js
+# Restart=always
+
+# [Install]
+# WantedBy=multi-user.target
+
