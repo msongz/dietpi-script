@@ -14,7 +14,8 @@ RSLS=resilio-sync_armhf.tar.gz
 RSLK=linux-armhf
 # NGROK=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
 RETRO=https://github.com/RetroPie/RetroPie-Setup.git
-FRPLINK=https://github.com/fatedier/frp/releases/download/v0.21.0/frp_0.21.0_linux_arm.tar.gz
+FRPLINK=https://github.com/fatedier/frp/releases/download/v0.23.3/frp_0.23.3_linux_arm.tar.gz
+FRPDOMAIN=msongz.ml
 
 ################### zsh
 echo "-------------zsh screen git"
@@ -42,7 +43,7 @@ echo "-------------zshrc"
 
 sed -i "s/# export PATH=\$HOME\/bin/export PATH=\$HOME\/bin\:\/sbin\:\/usr\/sbin\//g" $HOME/.zshrc
 sed -i "s/# export LANG/export LANG/g" $HOME/.zshrc
-sed -i "s/git$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting/g" $HOME/.zshrc
+sed -i "s/git)$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting)/g" $HOME/.zshrc
 sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"powerlevel9k\/powerlevel9k\"/g" $HOME/.zshrc
 sed -i "s/^alias/#alias/g" $HOME/.zshrc
 sed -i "s/^\/DietPi/#\/DietPi/g" $HOME/.zshrc
@@ -272,7 +273,7 @@ if [ ! -d $HOME/frp ]; then
 
 
 echo -e "[common]
-server_addr = msongz.design
+server_addr = $FRPDOMAIN
 server_port = 7000
 
 [ssh]
@@ -284,17 +285,19 @@ remote_port = 6000
 [web]
 type = http
 local_port = 80
-custom_domains = msongz.design" | sudo tee $HOME/frp/frpc.ini
+custom_domains = $FRPDOMAIN
+http_user = abc
+http_pwd = abc" | sudo tee $HOME/frp/frpc.ini
 
 echo -e "[Unit]
 Description=frp
-After=network.target
+After=syslog.target network.target
+Wants=network.target
 
 [Service]
 Type=simple
 Restart=always
 RestartSec=3
-User=root
 WorkingDirectory=$HOME/frp
 ExecStart=$HOME/frp/frpc -c $HOME/frp/frpc.ini
 
