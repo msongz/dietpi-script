@@ -14,7 +14,8 @@ RSLS=resilio-sync_x64.tar.gz
 RSLK=linux-x64
 # NGROK=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
 # RETRO=https://github.com/RetroPie/RetroPie-Setup.git
-FRPLINK=https://github.com/fatedier/frp/releases/download/v0.22.0/frp_0.22.0_linux_amd64.tar.gz
+FRPLINK=https://github.com/fatedier/frp/releases/download/v0.23.3/frp_0.23.3_linux_amd64.tar.gz
+FRPDOMAIN=msongz.ml
 
 
 
@@ -45,7 +46,7 @@ echo "-------------zshrc"
 
 sed -i "s/# export PATH=\$HOME\/bin/export PATH=\$HOME\/bin\:\/sbin\:\/usr\/sbin\//g" $HOME/.zshrc
 sed -i "s/# export LANG/export LANG/g" $HOME/.zshrc
-sed -i "s/git$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting/g" $HOME/.zshrc
+sed -i "s/git)$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting)/g" $HOME/.zshrc
 # sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"powerlevel9k\/powerlevel9k\"/g" $HOME/.zshrc
 sed -i "s/^alias/#alias/g" $HOME/.zshrc
 # sed -i "s/^\/DietPi/#\/DietPi/g" $HOME/.zshrc
@@ -120,31 +121,20 @@ if [ ! -d $HOME/frp ]; then
 
 
 echo -e "[common]
-server_addr = msongz.ml
-server_port = 7000
-
-[ssh]
-type = tcp
-local_ip = 127.0.0.1
-local_port = 22
-remote_port = 6000
-
-[web]
-type = http
-local_port = 80
-custom_domains = msongz.ml" | sudo tee $HOME/frp/frpc.ini
+bind_port = 7000
+vhost_http_port = 8080" | sudo tee $HOME/frp/frps.ini
 
 echo -e "[Unit]
 Description=frp
-After=network.target
+After=syslog.target network.target
+Wants=network.target
 
 [Service]
 Type=simple
 Restart=always
 RestartSec=3
-User=root
 WorkingDirectory=$HOME/frp
-ExecStart=$HOME/frp/frpc -c $HOME/frp/frpc.ini
+ExecStart=$HOME/frp/frps -c $HOME/frp/frps.ini
 
 [Install]
 WantedBy=multi-user.target" | sudo tee /etc/systemd/system/frp.service
