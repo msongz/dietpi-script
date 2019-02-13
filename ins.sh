@@ -1,6 +1,6 @@
 #!/bin/bash
 # My first script
-# pi2
+# pi2-temp-disable
 
 GITEA=https://dl.gitea.io/gitea/1.6.2/gitea-1.6.2-linux-arm-7
 ARIA=/var/lib/dietpi/dietpi-software/installed
@@ -155,27 +155,27 @@ file-allocation=none" > $ARIA/aria2.conf
 
 #################### gitea
 
-echo "-------------gitea"
+# echo "-------------gitea"
 
-if [ ! -d $HOME/gitea ]; then
-mkdir -p $HOME/gitea
-wget -O $HOME/gitea/gitea $GITEA
-chmod +x $HOME/gitea/gitea
-echo -e "[Unit]
-Description=Gitea (Git with a cup of tea)
+# if [ ! -d $HOME/gitea ]; then
+# mkdir -p $HOME/gitea
+# wget -O $HOME/gitea/gitea $GITEA
+# chmod +x $HOME/gitea/gitea
+# echo -e "[Unit]
+# Description=Gitea (Git with a cup of tea)
 
-[Service]
+# [Service]
 
-User=root
-WorkingDirectory=$HOME/gitea
-ExecStart=$HOME/gitea/gitea web
-Restart=always
+# User=root
+# WorkingDirectory=$HOME/gitea
+# ExecStart=$HOME/gitea/gitea web
+# Restart=always
 
-[Install]
-WantedBy=multi-user.target" | sudo tee /etc/systemd/system/gitea.service
+# [Install]
+# WantedBy=multi-user.target" | sudo tee /etc/systemd/system/gitea.service
 
-sudo systemctl enable gitea.service
-fi
+# sudo systemctl enable gitea.service
+# fi
 ################### resilio
 
 echo "-------------resilio"
@@ -309,34 +309,34 @@ fi
 
 ################### rsshub
 
-echo "-------------rsshub"
+# echo "-------------rsshub"
 
-if [ ! -d $HOME/RSSHub ]; then
+# if [ ! -d $HOME/RSSHub ]; then
 
-git clone $RSSHUB
+# git clone $RSSHUB
 
 
-npm config set registry https://registry.npm.taobao.org
+# npm config set registry https://registry.npm.taobao.org
 
-npm i -g npm
+# npm i -g npm
 
-cd $HOME/RSSHub && npm install
-cd $HOME
+# cd $HOME/RSSHub && npm install
+# cd $HOME
 
-echo -e "[Unit]
-Description=rsshub
+# echo -e "[Unit]
+# Description=rsshub
 
-[Service]
-User=root
-WorkingDirectory=$HOME/RSSHub
-ExecStart=/usr/local/bin/node $HOME/RSSHub/index.js
-Restart=always
+# [Service]
+# User=root
+# WorkingDirectory=$HOME/RSSHub
+# ExecStart=/usr/local/bin/node $HOME/RSSHub/index.js
+# Restart=always
 
-[Install]
-WantedBy=multi-user.target" | sudo tee /etc/systemd/system/rss.service
+# [Install]
+# WantedBy=multi-user.target" | sudo tee /etc/systemd/system/rss.service
 
-sudo systemctl enable rss.service
-fi
+# sudo systemctl enable rss.service
+# fi
 
 
 ################### etherpad
@@ -385,19 +385,19 @@ fi
 ################### RetroPie
 
 
-if ! dpkg -l lsb-release &> /dev/null
-then
-echo "-------------RetroPie"
+# if ! dpkg -l lsb-release &> /dev/null
+# then
+# echo "-------------RetroPie"
 
-sudo apt-get install lsb-release -y
-fi
+# sudo apt-get install lsb-release -y
+# fi
 
-if [ ! -d $HOME/RetroPie-Setup ]; then
-git clone --depth=1 $RETRO
+# if [ ! -d $HOME/RetroPie-Setup ]; then
+# git clone --depth=1 $RETRO
 
 
-sudo $HOME/RetroPie-Setup/retropie_setup.sh
-fi
+# sudo $HOME/RetroPie-Setup/retropie_setup.sh
+# fi
 ################### finish
 
 echo "-------------source"
@@ -457,3 +457,4 @@ env zsh
 # [Install]
 # WantedBy=multi-user.target
 
+# the end
