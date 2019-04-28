@@ -53,7 +53,7 @@ sed -i "s/^echo/#echo/g" $HOME/.zshrc
 
 echo -e "/DietPi/dietpi/login
 . /DietPi/dietpi/func/dietpi-globals
-alias json=\"python -m json.tool\" css=\"sudo systemctl stop\" csr=\"sudo systemctl restart\" cst=\"sudo systemctl status\" f/=\"find / -type f -iname\" f.=\"find . -type f -iname\" p=\"pidof\" k=\"kill -9\" rr=\"sudo reboot\" is=\"sudo apt-get install\" up=\"sudo apt-get update\" ud=\"sudo apt-get upgrade\" sd=\"sudo poweroff\" hh=\"htop\"
+alias json=\"python -m json.tool\" www=\"python -m SimpleHTTPServer 8000\" css=\"sudo systemctl stop\" csr=\"sudo systemctl restart\" cst=\"sudo systemctl status\" f/=\"find / -type f -iname\" f.=\"find . -type f -iname\" p=\"pidof\" k=\"kill -9\" rr=\"sudo reboot\" is=\"sudo apt-get install\" up=\"sudo apt-get update\" ud=\"sudo apt-get upgrade\" sd=\"sudo poweroff\" hh=\"htop\"
 source ~/.iterm2_shell_integration.zsh
 echo -e \" \\\033[1mstorage left : \\\033[7m\$(df -h|grep '/dev/root'|awk '{ print \$4 }')\"" >> $HOME/.zshrc
 
@@ -355,7 +355,7 @@ Description=etherpad-lite
 [Service]
 User=root
 Environment=NODE_ENV=production
-ExecStart=$HOME/etherpad-lite/bin/run.sh
+ExecStart=$HOME/etherpad-lite/bin/run.sh --root
 Restart=always
 
 [Install]
@@ -366,6 +366,9 @@ sudo systemctl enable etherpad.service
 sed -i "s/^bin\/installDeps/#bin\/installDeps/g" $HOME/etherpad-lite/bin/run.sh
 sed -i "s/etherpaduser/root/g" $HOME/etherpad-lite/settings.json
 sed -i "s/changeme1//" $HOME/etherpad-lite/settings.json
+# PASSWORD => 123456
+# theme change
+# admin password
 sed -i "80s/.*/  \/\*/g" $HOME/etherpad-lite/settings.json
 sed -i "85s/.*/  \*\//g" $HOME/etherpad-lite/settings.json
 sed -i "92s/.*//g" $HOME/etherpad-lite/settings.json
@@ -376,7 +379,7 @@ sed -i "s/PASSWORD//g" $HOME/etherpad-lite/settings.json
 
 
 mysql -u root -e "create database etherpad_lite_db"
-
+mysql -u root -e "grant CREATE,ALTER,SELECT,INSERT,UPDATE,DELETE on `etherpad_lite_db`.* to 'root'@'localhost' identified by '123456';"
 fi
 
 
