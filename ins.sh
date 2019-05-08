@@ -13,7 +13,7 @@ RSLS=resilio-sync_arm.tar.gz
 RSLK=linux-arm
 NGROK=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
 RETRO=https://github.com/RetroPie/RetroPie-Setup.git
-FRPLINK=https://github.com/fatedier/frp/releases/download/v0.23.3/frp_0.23.3_linux_arm.tar.gz
+FRPLINK=https://github.com/fatedier/frp/releases/download/v0.27.0/frp_0.27.0_linux_arm.tar.gz
 FRPDOMAIN=msongz.ml
 
 ################### zsh
