@@ -1,8 +1,8 @@
 #!/bin/bash
 # My first script
-# pi2
+# pi4
 
-GITEA=https://dl.gitea.io/gitea/1.6.2/gitea-1.6.2-linux-arm-7
+GITEA=https://dl.gitea.io/gitea/1.9.3/gitea-1.9.3-linux-arm64
 ARIA=/var/lib/dietpi/dietpi-software/installed
 EPAD=https://github.com/ether/etherpad-lite.git
 ZSHURL=https://raw.githubusercontent.com/msongz/oh-my-zsh/master/tools/install.sh
@@ -14,7 +14,7 @@ RSLS=resilio-sync_armhf.tar.gz
 RSLK=linux-armhf
 # NGROK=https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
 RETRO=https://github.com/RetroPie/RetroPie-Setup.git
-FRPLINK=https://github.com/fatedier/frp/releases/download/v0.23.3/frp_0.23.3_linux_arm.tar.gz
+FRPLINK=https://github.com/fatedier/frp/releases/download/v0.29.0/frp_0.29.0_linux_arm64.tar.gz
 FRPDOMAIN=msongz.ml
 
 ################### zsh
@@ -51,7 +51,7 @@ sed -i "s/^\. \/DietPi/#\. \/DietPi/g" $HOME/.zshrc
 sed -i "s/^source ~\/\.iterm2/#source ~\/\.iterm2/g" $HOME/.zshrc
 sed -i "s/^echo/#echo/g" $HOME/.zshrc
 
-echo -e "/DietPi/dietpi/login
+echo -e "/DietPi/dietpi/dietpi-login
 . /DietPi/dietpi/func/dietpi-globals
 alias json=\"python -m json.tool\" www=\"python -m SimpleHTTPServer 8000\" css=\"sudo systemctl stop\" csr=\"sudo systemctl restart\" cst=\"sudo systemctl status\" f/=\"find / -type f -iname\" f.=\"find . -type f -iname\" p=\"pidof\" k=\"kill -9\" rr=\"sudo reboot\" is=\"sudo apt-get install\" up=\"sudo apt-get update\" ud=\"sudo apt-get upgrade\" sd=\"sudo poweroff\" hh=\"htop\"
 source ~/.iterm2_shell_integration.zsh
