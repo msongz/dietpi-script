@@ -5,7 +5,8 @@
 GITEA=https://dl.gitea.io/gitea/1.9.3/gitea-1.9.3-linux-arm64
 ARIA=/var/lib/dietpi/dietpi-software/installed
 EPAD=https://github.com/ether/etherpad-lite.git
-ZSHURL=https://raw.githubusercontent.com/msongz/oh-my-zsh/master/tools/install.sh
+# ZSHURL=https://raw.githubusercontent.com/msongz/oh-my-zsh/master/tools/install.sh
+ZSHURL=https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
 ZSHSUGG=https://github.com/zsh-users/zsh-autosuggestions.git
 ZSHSYNX=https://github.com/zsh-users/zsh-syntax-highlighting.git
 POWERLEVEL9K=https://github.com/bhilburn/powerlevel9k.git
@@ -17,33 +18,57 @@ RETRO=https://github.com/RetroPie/RetroPie-Setup.git
 FRPLINK=https://github.com/fatedier/frp/releases/download/v0.29.0/frp_0.29.0_linux_arm64.tar.gz
 FRPDOMAIN=msongz.ml
 
+echo "-------------resilio"
+
+if [ ! -d $HOME/resilio ]; then
+mkdir -p $HOME/resilio
+wget https://download-cdn.resilio.com/stable/$RSLK/$RSLS
+tar -xf $RSLS -C $HOME/resilio
+sudo touch /etc/systemd/system/resilio.service
+
+echo -e "[Unit]
+Description = Resilio (folder sync)
+#After=network.target
+
+[Service]
+Type = forking
+User = root
+#Group = root
+#WorkingDirectory = $HOME
+ExecStart = $HOME/resilio/rslsync --webui.listen 0.0.0.0:8888
+Restart = always
+
+[Install]
+WantedBy = multi-user.target" | sudo tee /etc/systemd/system/resilio.service
+
+sudo systemctl enable resilio.service
+fi
+
+echo "-------------source-list"
+
+echo -e "#deb https://archive.raspberrypi.org/debian/ stretch main ui
+deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ stretch main ui" > /etc/apt/sources.list.d/raspi.list
+
+
 ################### zsh
 echo "-------------zsh screen git"
 
-if ! dpkg -l screen &> /dev/null
-then
-	sudo apt-get install screen -y
-fi
 
-if ! dpkg -l git &> /dev/null
-then
-	sudo apt-get install git -y
-fi
-
-if ! dpkg -l zsh &> /dev/null
-then
-	sudo apt-get install zsh -y
-fi
+sudo apt-get install screen -y
+sudo apt-get install git -y
+sudo apt-get install zsh -y
 
 echo "-------------oh-my-zsh"
 
 sh -c "$(curl -fsSL $ZSHURL)"
 
+exit
+
 echo "-------------zshrc"
 
 sed -i "s/# export PATH=\$HOME\/bin/export PATH=\$HOME\/bin\:\/sbin\:\/usr\/sbin\//g" $HOME/.zshrc
 sed -i "s/# export LANG/export LANG/g" $HOME/.zshrc
-sed -i "s/git)$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting)/g" $HOME/.zshrc
+sed -i "s/git)$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting encode64)/g" $HOME/.zshrc
 sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"powerlevel9k\/powerlevel9k\"/g" $HOME/.zshrc
 sed -i "s/^alias/#alias/g" $HOME/.zshrc
 sed -i "s/^\/DietPi/#\/DietPi/g" $HOME/.zshrc
@@ -88,126 +113,96 @@ fi
 
 #################### aria2
 
-echo "-------------aria2"
+# echo "-------------aria2"
 
-touch $ARIA/aria2.session
+# touch $ARIA/aria2.session
 
-# git clone https://github.com/ziahamza/webui-aria2.git
-# sudo apt-get install aria2 -y
-# mkdir ~/.aria2
-# mkdir -p $HOME/.config/aria2/ && touch $_/aria2.session $_/aria2.conf
-# mkdir $HOME/.config/aria2/aria2 && $_/aria2.conf
+# # git clone https://github.com/ziahamza/webui-aria2.git
+# # sudo apt-get install aria2 -y
+# # mkdir ~/.aria2
+# # mkdir -p $HOME/.config/aria2/ && touch $_/aria2.session $_/aria2.conf
+# # mkdir $HOME/.config/aria2/aria2 && $_/aria2.conf
 
-echo -e "# host is where aria2c is running on
-# host=localhost
-dir=/mnt/dietpi_userdata/downloads
+# echo -e "# host is where aria2c is running on
+# # host=localhost
+# dir=/mnt/dietpi_userdata/downloads
 
-# cleanup_policy
-# cleanup-policy=clean_got
-# cleanup-percent=90%
+# # cleanup_policy
+# # cleanup-policy=clean_got
+# # cleanup-percent=90%
 
-# The fallowing options are aria2c options as usual aria2.conf file
-# https://aria2.github.io/manual/en/html/aria2c.html
+# # The fallowing options are aria2c options as usual aria2.conf file
+# # https://aria2.github.io/manual/en/html/aria2c.html
 
-# RPC Options
-enable-rpc=true
-rpc-listen-all=true
-rpc-listen-port=6800
-rpc-secret=147852
-pause=false
-rpc-allow-origin-all=true
+# # RPC Options
+# enable-rpc=true
+# rpc-listen-all=true
+# rpc-listen-port=6800
+# rpc-secret=123456
+# pause=false
+# rpc-allow-origin-all=true
 
-# SAVE SESSION
-input-file=$ARIA/aria2.session
-save-session=$ARIA/aria2.session
-save-session-interval=60
+# # SAVE SESSION
+# input-file=$ARIA/aria2.session
+# save-session=$ARIA/aria2.session
+# save-session-interval=60
 
-# General Options
-log=/var/log/aria2.log
-log-level=warn
+# # General Options
+# log=/var/log/aria2.log
+# log-level=warn
 
-split=10
-continue=true
-check-integrity=true
-check-certificate=false
-max-concurrent-downloads=10
-max-connection-per-server=10
-max-file-not-found=3
-max-tries=5
-retry-wait=60
-ftp-pasv=true
-bt-max-peers=13
-# listen-port=6881-6999
-load-cookies=true
+# split=10
+# continue=true
+# check-integrity=true
+# check-certificate=false
+# max-concurrent-downloads=10
+# max-connection-per-server=10
+# max-file-not-found=3
+# max-tries=5
+# retry-wait=60
+# ftp-pasv=true
+# bt-max-peers=13
+# # listen-port=6881-6999
+# load-cookies=true
 
-max-overall-upload-limit=0
-max-overall-download-limit=0
-max-upload-limit=0
-max-download-limit=0
-seed-ratio=1
-seed-time=5000
+# max-overall-upload-limit=0
+# max-overall-download-limit=0
+# max-upload-limit=0
+# max-download-limit=0
+# seed-ratio=1
+# seed-time=5000
 
-# metalink-servers=13
-allow-overwrite=false
-always-resume=true
-auto-file-renaming=false
-file-allocation=none" > $ARIA/aria2.conf
+# # metalink-servers=13
+# allow-overwrite=false
+# always-resume=true
+# auto-file-renaming=false
+# file-allocation=none" > $ARIA/aria2.conf
 
 #################### gitea
 
-echo "-------------gitea"
+# echo "-------------gitea"
 
-if [ ! -d $HOME/gitea ]; then
-mkdir -p $HOME/gitea
-wget -O $HOME/gitea/gitea $GITEA
-chmod +x $HOME/gitea/gitea
-echo -e "[Unit]
-Description=Gitea (Git with a cup of tea)
+# if [ ! -d $HOME/gitea ]; then
+# mkdir -p $HOME/gitea
+# wget -O $HOME/gitea/gitea $GITEA
+# chmod +x $HOME/gitea/gitea
+# echo -e "[Unit]
+# Description=Gitea (Git with a cup of tea)
 
-[Service]
+# [Service]
 
-User=root
-WorkingDirectory=$HOME/gitea
-ExecStart=$HOME/gitea/gitea web
-Restart=always
+# User=root
+# WorkingDirectory=$HOME/gitea
+# ExecStart=$HOME/gitea/gitea web
+# Restart=always
 
-[Install]
-WantedBy=multi-user.target" | sudo tee /etc/systemd/system/gitea.service
+# [Install]
+# WantedBy=multi-user.target" | sudo tee /etc/systemd/system/gitea.service
 
-sudo systemctl enable gitea.service
-fi
+# sudo systemctl enable gitea.service
+# fi
 ################### resilio
 
-echo "-------------resilio"
-
-if [ ! -d $HOME/resilio ]; then
-mkdir -p $HOME/resilio
-wget https://download-cdn.resilio.com/stable/$RSLK/$RSLS
-tar -xf $RSLS -C $HOME/resilio
-sudo touch /etc/systemd/system/resilio.service
-
-echo -e "[Unit]
-Description = Resilio (folder sync)
-#After=network.target
-
-[Service]
-Type = forking
-User = root
-#Group = root
-#WorkingDirectory = $HOME
-ExecStart = $HOME/resilio/rslsync --webui.listen 0.0.0.0:8888
-Restart = always
-
-[Install]
-WantedBy = multi-user.target" | sudo tee /etc/systemd/system/resilio.service
-
-sudo systemctl enable resilio.service
-fi
-
-echo "-------------source-list"
-
-echo -e "#deb https://archive.raspberrypi.org/debian/ stretch main ui
-deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ stretch main ui" > /etc/apt/sources.list.d/raspi.list
 
 ################### ngrok
 
@@ -266,77 +261,77 @@ deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ stretch main ui" 
 
 ################### frp
 
-echo "-------------frp"
+# echo "-------------frp"
 
-if [ ! -d $HOME/frp ]; then
-  mkdir -p $HOME/frp && wget -qO- $FRPLINK | tar zxv -C $HOME/frp --strip-components=1
+# if [ ! -d $HOME/frp ]; then
+#   mkdir -p $HOME/frp && wget -qO- $FRPLINK | tar zxv -C $HOME/frp --strip-components=1
 
 
-echo -e "[common]
-server_addr = $FRPDOMAIN
-server_port = 7000
+# echo -e "[common]
+# server_addr = $FRPDOMAIN
+# server_port = 7000
 
-[ssh]
-type = tcp
-local_ip = 127.0.0.1
-local_port = 22
-remote_port = 6000
+# [ssh]
+# type = tcp
+# local_ip = 127.0.0.1
+# local_port = 22
+# remote_port = 6000
 
-[web]
-type = http
-local_port = 80
-custom_domains = $FRPDOMAIN
-http_user = abc
-http_pwd = abc" | sudo tee $HOME/frp/frpc.ini
+# [web]
+# type = http
+# local_port = 80
+# custom_domains = $FRPDOMAIN
+# http_user = abc
+# http_pwd = abc" | sudo tee $HOME/frp/frpc.ini
 
-echo -e "[Unit]
-Description=frp
-After=syslog.target network.target
-Wants=network.target
+# echo -e "[Unit]
+# Description=frp
+# After=syslog.target network.target
+# Wants=network.target
 
-[Service]
-Type=simple
-Restart=always
-RestartSec=3
-WorkingDirectory=$HOME/frp
-ExecStart=$HOME/frp/frpc -c $HOME/frp/frpc.ini
+# [Service]
+# Type=simple
+# Restart=always
+# RestartSec=3
+# WorkingDirectory=$HOME/frp
+# ExecStart=$HOME/frp/frpc -c $HOME/frp/frpc.ini
 
-[Install]
-WantedBy=multi-user.target" | sudo tee /etc/systemd/system/frp.service
+# [Install]
+# WantedBy=multi-user.target" | sudo tee /etc/systemd/system/frp.service
 
-sudo systemctl enable frp.service
-fi
+# sudo systemctl enable frp.service
+# fi
 
 ################### rsshub
 
-echo "-------------rsshub"
+# echo "-------------rsshub"
 
-if [ ! -d $HOME/RSSHub ]; then
+# if [ ! -d $HOME/RSSHub ]; then
 
-git clone $RSSHUB
+# git clone $RSSHUB
 
 
-npm config set registry https://registry.npm.taobao.org
+# npm config set registry https://registry.npm.taobao.org
 
-npm i -g npm
+# npm i -g npm
 
-cd $HOME/RSSHub && npm install
-cd $HOME
+# cd $HOME/RSSHub && npm install
+# cd $HOME
 
-echo -e "[Unit]
-Description=rsshub
+# echo -e "[Unit]
+# Description=rsshub
 
-[Service]
-User=root
-WorkingDirectory=$HOME/RSSHub
-ExecStart=/usr/local/bin/node $HOME/RSSHub/index.js
-Restart=always
+# [Service]
+# User=root
+# WorkingDirectory=$HOME/RSSHub
+# ExecStart=/usr/local/bin/node $HOME/RSSHub/index.js
+# Restart=always
 
-[Install]
-WantedBy=multi-user.target" | sudo tee /etc/systemd/system/rss.service
+# [Install]
+# WantedBy=multi-user.target" | sudo tee /etc/systemd/system/rss.service
 
-sudo systemctl enable rss.service
-fi
+# sudo systemctl enable rss.service
+# fi
 
 
 ################### etherpad
@@ -363,23 +358,23 @@ WantedBy=multi-user.target" | sudo tee /etc/systemd/system/etherpad.service
 
 sudo systemctl enable etherpad.service
 
-sed -i "s/^bin\/installDeps/#bin\/installDeps/g" $HOME/etherpad-lite/bin/run.sh
-sed -i "s/etherpaduser/root/g" $HOME/etherpad-lite/settings.json
-sed -i "s/changeme1//" $HOME/etherpad-lite/settings.json
-# PASSWORD => 123456
-# theme change
-# admin password
-sed -i "80s/.*/  \/\*/g" $HOME/etherpad-lite/settings.json
-sed -i "85s/.*/  \*\//g" $HOME/etherpad-lite/settings.json
-sed -i "92s/.*//g" $HOME/etherpad-lite/settings.json
-sed -i "102s/.*//g" $HOME/etherpad-lite/settings.json
-sed -i "310s/.*//g" $HOME/etherpad-lite/settings.json
-sed -i "323s/.*//g" $HOME/etherpad-lite/settings.json
-sed -i "s/PASSWORD//g" $HOME/etherpad-lite/settings.json
+# sed -i "s/^bin\/installDeps/#bin\/installDeps/g" $HOME/etherpad-lite/bin/run.sh
+# sed -i "s/etherpaduser/root/g" $HOME/etherpad-lite/settings.json
+# sed -i "s/changeme1//" $HOME/etherpad-lite/settings.json
+# # PASSWORD => 123456
+# # theme change
+# # admin password
+# sed -i "80s/.*/  \/\*/g" $HOME/etherpad-lite/settings.json
+# sed -i "85s/.*/  \*\//g" $HOME/etherpad-lite/settings.json
+# sed -i "92s/.*//g" $HOME/etherpad-lite/settings.json
+# sed -i "102s/.*//g" $HOME/etherpad-lite/settings.json
+# sed -i "310s/.*//g" $HOME/etherpad-lite/settings.json
+# sed -i "323s/.*//g" $HOME/etherpad-lite/settings.json
+# sed -i "s/PASSWORD//g" $HOME/etherpad-lite/settings.json
 
 
 mysql -u root -e "create database etherpad_lite_db"
-mysql -u root -e "grant CREATE,ALTER,SELECT,INSERT,UPDATE,DELETE on `etherpad_lite_db`.* to 'root'@'localhost' identified by '123456';"
+mysql -u root -e "grant CREATE,ALTER,SELECT,INSERT,UPDATE,DELETE on \`etherpad_lite_db\`.* to 'root'@'localhost' identified by '123456';"
 fi
 
 
@@ -388,19 +383,19 @@ fi
 ################### RetroPie
 
 
-if ! dpkg -l lsb-release &> /dev/null
-then
-echo "-------------RetroPie"
+# if ! dpkg -l lsb-release &> /dev/null
+# then
+# echo "-------------RetroPie"
 
-sudo apt-get install lsb-release -y
-fi
+# sudo apt-get install lsb-release -y
+# fi
 
-if [ ! -d $HOME/RetroPie-Setup ]; then
-git clone --depth=1 $RETRO
+# if [ ! -d $HOME/RetroPie-Setup ]; then
+# git clone --depth=1 $RETRO
 
 
-sudo $HOME/RetroPie-Setup/retropie_setup.sh
-fi
+# sudo $HOME/RetroPie-Setup/retropie_setup.sh
+# fi
 ################### finish
 
 echo "-------------source"
