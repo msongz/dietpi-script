@@ -62,27 +62,6 @@ echo "-------------oh-my-zsh"
 
 sh -c "$(curl -fsSL $ZSHURL)"
 
-exit
-
-echo "-------------zshrc"
-
-sed -i "s/# export PATH=\$HOME\/bin/export PATH=\$HOME\/bin\:\/sbin\:\/usr\/sbin\//g" $HOME/.zshrc
-sed -i "s/# export LANG/export LANG/g" $HOME/.zshrc
-sed -i "s/git)$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting encode64)/g" $HOME/.zshrc
-sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"powerlevel9k\/powerlevel9k\"/g" $HOME/.zshrc
-sed -i "s/^alias/#alias/g" $HOME/.zshrc
-sed -i "s/^\/DietPi/#\/DietPi/g" $HOME/.zshrc
-sed -i "s/^\. \/DietPi/#\. \/DietPi/g" $HOME/.zshrc
-sed -i "s/^source ~\/\.iterm2/#source ~\/\.iterm2/g" $HOME/.zshrc
-sed -i "s/^echo/#echo/g" $HOME/.zshrc
-
-echo -e "/DietPi/dietpi/dietpi-login
-. /DietPi/dietpi/func/dietpi-globals
-alias json=\"python -m json.tool\" www=\"python -m SimpleHTTPServer 8000\" css=\"sudo systemctl stop\" csr=\"sudo systemctl restart\" cst=\"sudo systemctl status\" f/=\"find / -type f -iname\" f.=\"find . -type f -iname\" p=\"pidof\" k=\"kill -9\" rr=\"sudo reboot\" is=\"sudo apt-get install\" up=\"sudo apt-get update\" ud=\"sudo apt-get upgrade\" sd=\"sudo poweroff\" hh=\"htop\"
-source ~/.iterm2_shell_integration.zsh
-echo -e \" \\\033[1mstorage left : \\\033[7m\$(df -h|grep '/dev/root'|awk '{ print \$4 }')\"" >> $HOME/.zshrc
-
-
 
 echo "-------------zsh-autosuggestions"
 
@@ -103,6 +82,24 @@ echo "-------------powerlevel9k"
 if [ ! -d $HOME/.oh-my-zsh/custom/themes/powerlevel9k ]; then
   git clone $POWERLEVEL9K $HOME/.oh-my-zsh/custom/themes/powerlevel9k
 fi
+
+echo "-------------zshrc"
+
+sed -i "s/# export PATH=\$HOME\/bin/export PATH=\$HOME\/bin\:\/sbin\:\/usr\/sbin\//g" $HOME/.zshrc
+sed -i "s/# export LANG/export LANG/g" $HOME/.zshrc
+sed -i "s/git)$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting encode64)/g" $HOME/.zshrc
+sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"powerlevel9k\/powerlevel9k\"/g" $HOME/.zshrc
+sed -i "s/^alias/#alias/g" $HOME/.zshrc
+sed -i "s/^\/DietPi/#\/DietPi/g" $HOME/.zshrc
+sed -i "s/^\. \/DietPi/#\. \/DietPi/g" $HOME/.zshrc
+sed -i "s/^source ~\/\.iterm2/#source ~\/\.iterm2/g" $HOME/.zshrc
+sed -i "s/^echo/#echo/g" $HOME/.zshrc
+
+echo -e "/DietPi/dietpi/dietpi-login
+. /DietPi/dietpi/func/dietpi-globals
+alias json=\"python -m json.tool\" www=\"python -m SimpleHTTPServer 8000\" css=\"sudo systemctl stop\" csr=\"sudo systemctl restart\" cst=\"sudo systemctl status\" f/=\"find / -type f -iname\" f.=\"find . -type f -iname\" p=\"pidof\" k=\"kill -9\" rr=\"sudo reboot\" is=\"sudo apt-get install\" up=\"sudo apt-get update\" ud=\"sudo apt-get upgrade\" sd=\"sudo poweroff\" hh=\"htop\"
+source ~/.iterm2_shell_integration.zsh
+echo -e \" \\\033[1mstorage left : \\\033[7m\$(df -h|grep '/dev/root'|awk '{ print \$4 }')\"" >> $HOME/.zshrc
 
 
 
@@ -177,6 +174,12 @@ fi
 # always-resume=true
 # auto-file-renaming=false
 # file-allocation=none" > $ARIA/aria2.conf
+#################### zerotier
+curl -s https://install.zerotier.com | sudo bash
+
+#################### filebrowser
+curl -fsSL https://filebrowser.xyz/get.sh | bash
+filebrowser -a 0.0.0.0 -r / -p 8080
 
 #################### gitea
 
