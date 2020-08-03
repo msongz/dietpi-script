@@ -54,8 +54,8 @@ deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ stretch main ui" 
 echo "-------------zsh screen git"
 
 
-sudo apt-get install screen -y
-sudo apt-get install git -y
+# sudo apt-get install screen -y
+# sudo apt-get install git -y
 sudo apt-get install zsh -y
 
 echo "-------------oh-my-zsh"
@@ -68,12 +68,14 @@ echo "-------------zsh-autosuggestions"
 if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]; then
 	# git clone http://zerow:3000/songz/zsh-autosuggestions $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 	git clone $ZSHSUGG $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+	git clone $ZSHSUGG ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 fi
 
 echo "-------------zsh-syntax-highlighting"
 
 if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]; then
-	git clone $ZSHSYNX $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+	# git clone $ZSHSYNX $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+	git clone $ZSHSYNX ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 	# git clone http://zerow:3000/songz/syntax.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 fi
 
@@ -81,6 +83,7 @@ echo "-------------powerlevel9k"
 
 if [ ! -d $HOME/.oh-my-zsh/custom/themes/powerlevel9k ]; then
   git clone $POWERLEVEL9K $HOME/.oh-my-zsh/custom/themes/powerlevel9k
+  git clone $POWERLEVEL9K ~/.oh-my-zsh/custom/themes/powerlevel9k
 fi
 
 echo "-------------zshrc"
@@ -95,8 +98,8 @@ sed -i "s/^\. \/DietPi/#\. \/DietPi/g" $HOME/.zshrc
 sed -i "s/^source ~\/\.iterm2/#source ~\/\.iterm2/g" $HOME/.zshrc
 sed -i "s/^echo/#echo/g" $HOME/.zshrc
 
-echo -e "/DietPi/dietpi/dietpi-login
-. /DietPi/dietpi/func/dietpi-globals
+echo -e "/boot/dietpi/dietpi-login
+. /boot/dietpi/func/dietpi-globals
 alias json=\"python -m json.tool\" www=\"python -m SimpleHTTPServer 8000\" css=\"sudo systemctl stop\" csr=\"sudo systemctl restart\" cst=\"sudo systemctl status\" f/=\"find / -type f -iname\" f.=\"find . -type f -iname\" p=\"pidof\" k=\"kill -9\" rr=\"sudo reboot\" is=\"sudo apt-get install\" up=\"sudo apt-get update\" ud=\"sudo apt-get upgrade\" sd=\"sudo poweroff\" hh=\"htop\"
 source ~/.iterm2_shell_integration.zsh
 echo -e \" \\\033[1mstorage left : \\\033[7m\$(df -h|grep '/dev/root'|awk '{ print \$4 }')\"" >> $HOME/.zshrc
@@ -178,7 +181,8 @@ echo -e \" \\\033[1mstorage left : \\\033[7m\$(df -h|grep '/dev/root'|awk '{ pri
 curl -s https://install.zerotier.com | sudo bash
 
 #################### filebrowser
-curl -fsSL https://filebrowser.xyz/get.sh | bash
+curl -fsSL https://filebrowser.org/get.sh | bash
+filebrowser config set --auth.method=noauth
 filebrowser -a 0.0.0.0 -r / -p 8080
 
 #################### gitea
@@ -410,6 +414,9 @@ env zsh
 
 
 # useful command
+# 
+# hdmi_ignore_edid=0xa5000080
+# hdmi_ignore_edid:1=0xa5000080
 
 # cat /Users/meng/dietpi-script/songz-dietpi.txt >/Volumes/boot/dietpi.txt
 

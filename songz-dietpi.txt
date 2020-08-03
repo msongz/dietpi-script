@@ -20,8 +20,8 @@ AUTO_SETUP_TIMEZONE=Asia/Hong_Kong
 # Enable Ethernet or WiFi adapter: 1=enable | 0=disable
 # - If both Ethernet and WiFi are enabled, WiFi will take priority and Ethernet will be disabled.
 # - If using WiFi, please edit dietpi-wifi.txt to pre-enter credentials.
-AUTO_SETUP_NET_ETHERNET_ENABLED=1
-AUTO_SETUP_NET_WIFI_ENABLED=0
+AUTO_SETUP_NET_ETHERNET_ENABLED=0
+AUTO_SETUP_NET_WIFI_ENABLED=1
 
 # Force ethernet speeds: 0=automatic speed | 10 = 10Mbit | 100 = 100Mbit etc
 # - This is mainly aimed at Pine A64 which may have an HW issue that causes unstable 1Gbit link.
@@ -66,7 +66,7 @@ AUTO_SETUP_CUSTOM_SCRIPT_EXEC=0
 
 ##### Software Options #####
 # SSH Server Selection: 0=none/custom | -1=Dropbear | -2=OpenSSH
-AUTO_SETUP_SSH_SERVER_INDEX=-2
+AUTO_SETUP_SSH_SERVER_INDEX=-1
 
 # File Server Selection: 0=none/custom | -1=ProFTP | -2=Samba
 AUTO_SETUP_FILE_SERVER_INDEX=-2
@@ -185,14 +185,14 @@ CONFIG_PREFER_IPV4=1
 
 # APT mirrors which are applied to /etc/apt/sources.list | Values here will also be applied during 1st run setup
 # - Raspbian: https://www.raspbian.org/RaspbianMirrors
-CONFIG_APT_RASPBIAN_MIRROR=http://raspbian.raspberrypi.org/raspbian/
+CONFIG_APT_RASPBIAN_MIRROR=https://mirrors.ustc.edu.cn/raspbian/raspbian/
 # - Debian: https://www.debian.org/mirror/official#list
 CONFIG_APT_DEBIAN_MIRROR=https://deb.debian.org/debian/
 
 # NTP mirror, applied to /etc/ntp.conf
 # - For a full list, please see: https://www.ntppool.org/zone/@
 # - Please remove the initial integer and full stop from the value (removing "0."), eg: debian.pool.ntp.org
-CONFIG_NTP_MIRROR=debian.pool.ntp.org
+CONFIG_NTP_MIRROR=asia.pool.ntp.org
 
 #------------------------------------------------------------------------------------------------------
 # D I E T - P I
