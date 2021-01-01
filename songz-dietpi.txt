@@ -6,6 +6,10 @@
 # D I E T - P I
 # DietPi-Automation settings, applied on first boot of DietPi only, ONCE!
 #------------------------------------------------------------------------------------------------------
+# By setting this to "1" you accept the DietPi GPLv2 license and skip the related interactive dialog.
+# - Full license text: /boot/dietpi-LICENSE.txt
+AUTO_SETUP_ACCEPT_LICENSE=1
+
 ##### Language/Regional Options #####
 # Locale: eg: "en_GB.UTF-8" / "de_DE.UTF-8" | One entry and UTF-8 ONLY!
 AUTO_SETUP_LOCALE=en_US.UTF-8
@@ -28,7 +32,7 @@ AUTO_SETUP_NET_WIFI_ENABLED=1
 AUTO_SETUP_NET_ETH_FORCE_SPEED=0
 
 # WiFi country code: 2 uppercase character value (e.g. GB US DE JP): https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-AUTO_SETUP_NET_WIFI_COUNTRY_CODE=GB
+AUTO_SETUP_NET_WIFI_COUNTRY_CODE=CN
 
 # Enter your Static Network details below, if applicable.
 AUTO_SETUP_NET_USESTATIC=0
@@ -41,15 +45,15 @@ AUTO_SETUP_NET_STATIC_DNS=9.9.9.9
 AUTO_SETUP_NET_HOSTNAME=pi4
 
 ##### Misc Options #####
-# Swapfile size to generate: 0=disable | 1=auto (2GB-RAM = size) | 2+=manual (MB)
+# Swap space size to generate: 0 => disable | 1 => auto | 2 and up => size in MiB
 AUTO_SETUP_SWAPFILE_SIZE=1
-# Swapfile location
+# Swap space location: "zram" => swap space on /dev/zram0 (auto-size = 50% of RAM size) | /path/to/file => swap file at location (auto-size = 2 GiB minus RAM size)
 AUTO_SETUP_SWAPFILE_LOCATION=/var/swap
 
-# Disable HDMI output (and GPU/VPU where supported) for supported devices: RPi, Odroid C1, Odroid C2
+# Set to "1" to disable HDMI output (and GPU/VPU where supported) for supported devices: RPi, Odroid C1, Odroid C2
 AUTO_SETUP_HEADLESS=0
 
-# Unmask (enable) systemd-logind service, which is masked by default on DietPi
+# Unmask (enable) systemd-logind service (including dbus), which is masked by default on DietPi
 AUTO_UNMASK_LOGIND=0
 
 # Custom Script (pre-networking and pre-DietPi install)
@@ -98,7 +102,7 @@ AUTO_SETUP_AUTOMATED=0
 # Global Password to be applied for the system
 # - Affects user "root" and "dietpi" login passwords, and, all software installed by dietpi-software, that requires a login password
 # - WARN: Passwords with any of the following characters are not supported: \"$
-AUTO_SETUP_GLOBAL_PASSWORD=123456
+AUTO_SETUP_GLOBAL_PASSWORD=123
 
 # Software to automatically install
 # - List of available software IDs: https://github.com/MichaIng/DietPi/wiki/DietPi-Software-list
@@ -162,7 +166,7 @@ CONFIG_CHECK_CONNECTION_IP=9.9.9.9
 CONFIG_CHECK_DNS_DOMAIN=dns9.quad9.net
 
 # DietPi checks for updates: Allows DietPi to check for updates on a daily basis and boot using a less 1 KiB file download.
-CONFIG_CHECK_DIETPI_UPDATES=1
+CONFIG_CHECK_DIETPI_UPDATES=0
 
 # Network time sync: 0=disabled | 1=boot only | 2=boot + daily | 3=boot + hourly | 4=Daemon + Drift
 CONFIG_NTP_MODE=2

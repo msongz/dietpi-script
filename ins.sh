@@ -44,18 +44,18 @@ WantedBy = multi-user.target" | sudo tee /etc/systemd/system/resilio.service
 sudo systemctl enable resilio.service
 fi
 
-echo "-------------source-list"
+# echo "-------------source-list"
 
-echo -e "#deb https://archive.raspberrypi.org/debian/ stretch main ui
-deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ stretch main ui" > /etc/apt/sources.list.d/raspi.list
+# echo -e "#deb https://archive.raspberrypi.org/debian/ stretch main ui
+# deb http://mirrors.ustc.edu.cn/archive.raspberrypi.org/debian/ stretch main ui" > /etc/apt/sources.list.d/raspi.list
 
 
 ################### zsh
 echo "-------------zsh screen git"
 
 
-# sudo apt-get install screen -y
-# sudo apt-get install git -y
+sudo apt-get install screen -y
+sudo apt-get install git -y
 sudo apt-get install zsh -y
 
 echo "-------------oh-my-zsh"
@@ -79,27 +79,27 @@ if [ ! -d $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]; then
 	# git clone http://zerow:3000/songz/syntax.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 fi
 
-echo "-------------powerlevel9k"
+# echo "-------------powerlevel9k"
 
-if [ ! -d $HOME/.oh-my-zsh/custom/themes/powerlevel9k ]; then
-  git clone $POWERLEVEL9K $HOME/.oh-my-zsh/custom/themes/powerlevel9k
-  git clone $POWERLEVEL9K ~/.oh-my-zsh/custom/themes/powerlevel9k
-fi
+# if [ ! -d $HOME/.oh-my-zsh/custom/themes/powerlevel9k ]; then
+#   git clone $POWERLEVEL9K $HOME/.oh-my-zsh/custom/themes/powerlevel9k
+#   git clone $POWERLEVEL9K ~/.oh-my-zsh/custom/themes/powerlevel9k
+# fi
 
 echo "-------------zshrc"
 
-sed -i "s/# export PATH=\$HOME\/bin/export PATH=\$HOME\/bin\:\/sbin\:\/usr\/sbin\//g" $HOME/.zshrc
+sed -i "s/# export PATH=\$HOME\/bin/export PATH=\$HOME\/bin\:\/boot\/dietpi\:\/sbin\:\/usr\/sbin\//g" $HOME/.zshrc
 sed -i "s/# export LANG/export LANG/g" $HOME/.zshrc
 sed -i "s/git)$/git colorize sudo extract zsh-autosuggestions z zsh-syntax-highlighting encode64)/g" $HOME/.zshrc
-sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"powerlevel9k\/powerlevel9k\"/g" $HOME/.zshrc
+# sed -i "s/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"powerlevel9k\/powerlevel9k\"/g" $HOME/.zshrc
 sed -i "s/^alias/#alias/g" $HOME/.zshrc
 sed -i "s/^\/DietPi/#\/DietPi/g" $HOME/.zshrc
 sed -i "s/^\. \/DietPi/#\. \/DietPi/g" $HOME/.zshrc
-sed -i "s/^source ~\/\.iterm2/#source ~\/\.iterm2/g" $HOME/.zshrc
+# sed -i "s/^source ~\/\.iterm2/#source ~\/\.iterm2/g" $HOME/.zshrc
 sed -i "s/^echo/#echo/g" $HOME/.zshrc
 
 echo -e "/boot/dietpi/dietpi-login
-. /boot/dietpi/func/dietpi-globals
+# . /boot/dietpi/func/dietpi-globals
 alias json=\"python -m json.tool\" www=\"python -m SimpleHTTPServer 8000\" css=\"sudo systemctl stop\" csr=\"sudo systemctl restart\" cst=\"sudo systemctl status\" f/=\"find / -type f -iname\" f.=\"find . -type f -iname\" p=\"pidof\" k=\"kill -9\" rr=\"sudo reboot\" is=\"sudo apt-get install\" up=\"sudo apt-get update\" ud=\"sudo apt-get upgrade\" sd=\"sudo poweroff\" hh=\"htop\"
 source ~/.iterm2_shell_integration.zsh
 echo -e \" \\\033[1mstorage left : \\\033[7m\$(df -h|grep '/dev/root'|awk '{ print \$4 }')\"" >> $HOME/.zshrc
@@ -178,7 +178,7 @@ echo -e \" \\\033[1mstorage left : \\\033[7m\$(df -h|grep '/dev/root'|awk '{ pri
 # auto-file-renaming=false
 # file-allocation=none" > $ARIA/aria2.conf
 #################### zerotier
-curl -s https://install.zerotier.com | sudo bash
+# curl -s https://install.zerotier.com | sudo bash
 
 #################### filebrowser
 curl -fsSL https://filebrowser.org/get.sh | bash
@@ -343,27 +343,27 @@ filebrowser -a 0.0.0.0 -r / -p 8080
 
 ################### etherpad
 
-echo "-------------etherpad"
+# echo "-------------etherpad"
 
-if [ ! -d $HOME/etherpad-lite ]; then
+# if [ ! -d $HOME/etherpad-lite ]; then
 
-git clone $EPAD
+# git clone $EPAD
 
-$HOME/etherpad-lite/bin/installDeps.sh --root
+# $HOME/etherpad-lite/bin/installDeps.sh --root
 
-echo -e "[Unit]
-Description=etherpad-lite
+# echo -e "[Unit]
+# Description=etherpad-lite
 
-[Service]
-User=root
-Environment=NODE_ENV=production
-ExecStart=$HOME/etherpad-lite/bin/run.sh --root
-Restart=always
+# [Service]
+# User=root
+# Environment=NODE_ENV=production
+# ExecStart=$HOME/etherpad-lite/bin/run.sh --root
+# Restart=always
 
-[Install]
-WantedBy=multi-user.target" | sudo tee /etc/systemd/system/etherpad.service
+# [Install]
+# WantedBy=multi-user.target" | sudo tee /etc/systemd/system/etherpad.service
 
-sudo systemctl enable etherpad.service
+# sudo systemctl enable etherpad.service
 
 # sed -i "s/^bin\/installDeps/#bin\/installDeps/g" $HOME/etherpad-lite/bin/run.sh
 # sed -i "s/etherpaduser/root/g" $HOME/etherpad-lite/settings.json
@@ -380,9 +380,9 @@ sudo systemctl enable etherpad.service
 # sed -i "s/PASSWORD//g" $HOME/etherpad-lite/settings.json
 
 
-mysql -u root -e "create database etherpad_lite_db"
-mysql -u root -e "grant CREATE,ALTER,SELECT,INSERT,UPDATE,DELETE on \`etherpad_lite_db\`.* to 'root'@'localhost' identified by '123456';"
-fi
+# mysql -u root -e "create database etherpad_lite_db"
+# mysql -u root -e "grant CREATE,ALTER,SELECT,INSERT,UPDATE,DELETE on \`etherpad_lite_db\`.* to 'root'@'localhost' identified by '123456';"
+# fi
 
 
 
