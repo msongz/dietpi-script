@@ -424,7 +424,7 @@ env zsh
 
 # omxplayer looping
 
-# while : ; do for f in * ; do omxplayer --blank --win 0,50,1280,670 --aspect-mode stretch "$f"; done; done
+#  while : ; do for f in * ; do omxplayer --blank --aspect-mode fit "$f";printf -- "----\n $f \n----\n"; done; done
 
 # lighttpd wordpress fix permalink to /etc/lighttpd/lighttpd.conf
 
